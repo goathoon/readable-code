@@ -3,8 +3,6 @@ plugins {
 }
 
 group = 'cleancode'
-version = '0.0.1-SNAPSHOT'
-
 java {
     sourceCompatibility = '17'
 }
@@ -16,8 +14,16 @@ repositories {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testImplementation("org.assertj:assertj-core:3.25.3")
+
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly 'org.projectlombok:lombok:0.11.0'
+    annotationProcessor 'org.projectlombok:lombok:0.11.0'
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+version = '0.0.1-SNAPSHOT'
