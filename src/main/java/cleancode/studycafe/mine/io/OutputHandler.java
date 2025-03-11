@@ -1,7 +1,9 @@
-package cleancode.studycafe.asis.io;
+package cleancode.studycafe.mine.io;
 
-import cleancode.studycafe.asis.model.StudyCafeLockerPass;
-import cleancode.studycafe.asis.model.StudyCafePass;
+import cleancode.studycafe.mine.model.StudyCafeLockerPass;
+import cleancode.studycafe.mine.model.StudyCafeOrder;
+import cleancode.studycafe.mine.model.StudyCafePass;
+import cleancode.studycafe.mine.pass.StudyCafePasses;
 
 import java.util.List;
 
@@ -22,12 +24,14 @@ public class OutputHandler {
         System.out.println("1. 시간 이용권(자유석) | 2. 주단위 이용권(자유석) | 3. 1인 고정석");
     }
 
-    public void showPassListForSelection(List<StudyCafePass> passes) {
+    public void showPassListForSelection(StudyCafePasses passes) {
         System.out.println();
         System.out.println("이용권 목록");
-        for (int index = 0; index < passes.size(); index++) {
-            StudyCafePass pass = passes.get(index);
-            System.out.println(String.format("%s. ", index + 1) + pass.display());
+
+        // get을 써서 꺼내는 어쩔수 없는 경우일까?
+        List<StudyCafePass> studyCafePasses = passes.getStudyCafePasses();
+        for (int index = 0; index < studyCafePasses.size(); index++) {
+            System.out.println(String.format("%s. ", index + 1) + studyCafePasses.get(index).display());
         }
     }
 
@@ -42,12 +46,15 @@ public class OutputHandler {
         System.out.println("1. 예 | 2. 아니오");
     }
 
-    public void showPassOrderSummary(StudyCafePass selectedPass, StudyCafeLockerPass lockerPass) {
+    public void showPassOrderSummary(StudyCafeOrder order) {
+        StudyCafeLockerPass selectedLockerPass = order.getLockerPass();
+        StudyCafePass selectedPass = order.getStudyCafePass();
+
         System.out.println();
         System.out.println("이용 내역");
         System.out.println("이용권: " + selectedPass.display());
-        if (lockerPass != null) {
-            System.out.println("사물함: " + lockerPass.display());
+        if (selectedLockerPass != null) {
+            System.out.println("사물함: " + selectedLockerPass.display());
         }
 
         double discountRate = selectedPass.getDiscountRate();
@@ -56,7 +63,7 @@ public class OutputHandler {
             System.out.println("이벤트 할인 금액: " + discountPrice + "원");
         }
 
-        int totalPrice = selectedPass.getPrice() - discountPrice + (lockerPass != null ? lockerPass.getPrice() : 0);
+        int totalPrice = selectedPass.getPrice() - discountPrice + (selectedLockerPass != null ? selectedLockerPass.getPrice() : 0);
         System.out.println("총 결제 금액: " + totalPrice + "원");
         System.out.println();
     }
