@@ -1,5 +1,7 @@
 package cleancode.studycafe.mine.model;
 
+import java.util.Optional;
+
 public class StudyCafeLockerPass {
 
     private final StudyCafePassType passType;

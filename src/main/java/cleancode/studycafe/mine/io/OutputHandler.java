@@ -1,6 +1,7 @@
 package cleancode.studycafe.mine.io;
 
 import cleancode.studycafe.mine.model.StudyCafeLockerPass;
+import cleancode.studycafe.mine.model.StudyCafeOrder;
 import cleancode.studycafe.mine.model.StudyCafePass;
 import cleancode.studycafe.mine.pass.StudyCafePasses;
 
@@ -45,12 +46,15 @@ public class OutputHandler {
         System.out.println("1. 예 | 2. 아니오");
     }
 
-    public void showPassOrderSummary(StudyCafePass selectedPass, StudyCafeLockerPass lockerPass) {
+    public void showPassOrderSummary(StudyCafeOrder order) {
+        StudyCafeLockerPass selectedLockerPass = order.getLockerPass();
+        StudyCafePass selectedPass = order.getStudyCafePass();
+
         System.out.println();
         System.out.println("이용 내역");
         System.out.println("이용권: " + selectedPass.display());
-        if (lockerPass != null) {
-            System.out.println("사물함: " + lockerPass.display());
+        if (selectedLockerPass != null) {
+            System.out.println("사물함: " + selectedLockerPass.display());
         }
 
         double discountRate = selectedPass.getDiscountRate();
@@ -59,7 +63,7 @@ public class OutputHandler {
             System.out.println("이벤트 할인 금액: " + discountPrice + "원");
         }
 
-        int totalPrice = selectedPass.getPrice() - discountPrice + (lockerPass != null ? lockerPass.getPrice() : 0);
+        int totalPrice = selectedPass.getPrice() - discountPrice + (selectedLockerPass != null ? selectedLockerPass.getPrice() : 0);
         System.out.println("총 결제 금액: " + totalPrice + "원");
         System.out.println();
     }

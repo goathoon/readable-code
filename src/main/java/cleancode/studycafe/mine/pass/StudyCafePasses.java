@@ -42,4 +42,8 @@ public class StudyCafePasses {
     public StudyCafePass pickOneAt(int index) {
         return studyCafePasses.get(index);
     }
+
+    public void add(StudyCafePass studyCafePass) {
+        this.studyCafePasses.add(studyCafePass);
+    }
 }

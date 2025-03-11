@@ -27,4 +27,7 @@ public class LockerPasses {
                 .findFirst();
     }
 
+    public void add(StudyCafeLockerPass lockerPass) {
+        this.passes.add(lockerPass);
+    }
 }
